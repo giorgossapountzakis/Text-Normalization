@@ -1,0 +1,157 @@
+{
+    "Latin-diacritics": {
+        "total": 708,
+        "preserved": 598,
+        "percentance": 0.844632768361582
+    },
+    "LATIN": {
+        "total": 177,
+        "preserved": 96,
+        "percentance": 0.5423728813559322
+    },
+    "COMBINING": {
+        "total": 1,
+        "preserved": 0,
+        "percentance": 0.0
+    },
+    "Katakana": {
+        "total": 37,
+        "preserved": 0,
+        "percentance": 0.0
+    },
+    "CJK": {
+        "total": 225,
+        "preserved": 0,
+        "percentance": 0.0
+    },
+    "Korean": {
+        "total": 62,
+        "preserved": 0,
+        "percentance": 0.0
+    },
+    "Cyrillic": {
+        "total": 120,
+        "preserved": 4,
+        "percentance": 0.03333333333333333
+    },
+    "RIGHT": {
+        "total": 53,
+        "preserved": 45,
+        "percentance": 0.8490566037735849
+    },
+    "Arabic": {
+        "total": 28,
+        "preserved": 0,
+        "percentance": 0.0
+    },
+    "LEFT": {
+        "total": 25,
+        "preserved": 20,
+        "percentance": 0.8
+    },
+    "MODIFIER": {
+        "total": 1,
+        "preserved": 1,
+        "percentance": 1.0
+    },
+    "Hiragana": {
+        "total": 27,
+        "preserved": 0,
+        "percentance": 0.0
+    },
+    "PRIME": {
+        "total": 1,
+        "preserved": 1,
+        "percentance": 1.0
+    },
+    "DOUBLE": {
+        "total": 1,
+        "preserved": 1,
+        "percentance": 1.0
+    },
+    "HYPHEN": {
+        "total": 16,
+        "preserved": 14,
+        "percentance": 0.875
+    },
+    "Basic-Latin": {
+        "total": 23,
+        "preserved": 22,
+        "percentance": 0.9565217391304348
+    },
+    "Thai": {
+        "total": 9,
+        "preserved": 0,
+        "percentance": 0.0
+    },
+    "ZERO": {
+        "total": 16,
+        "preserved": 12,
+        "percentance": 0.75
+    },
+    "FULLWIDTH": {
+        "total": 2,
+        "preserved": 0,
+        "percentance": 0.0
+    },
+    "HEBREW": {
+        "total": 8,
+        "preserved": 0,
+        "percentance": 0.0
+    },
+    "KHMER": {
+        "total": 4,
+        "preserved": 1,
+        "percentance": 0.25
+    },
+    "WEST": {
+        "total": 1,
+        "preserved": 1,
+        "percentance": 1.0
+    },
+    "IDEOGRAPHIC": {
+        "total": 1,
+        "preserved": 0,
+        "percentance": 0.0
+    },
+    "GREEK": {
+        "total": 5,
+        "preserved": 0,
+        "percentance": 0.0
+    },
+    "WHITE": {
+        "total": 1,
+        "preserved": 0,
+        "percentance": 0.0
+    },
+    "MALE": {
+        "total": 2,
+        "preserved": 0,
+        "percentance": 0.0
+    },
+    "EN": {
+        "total": 2,
+        "preserved": 1,
+        "percentance": 0.5
+    },
+    "WAVE": {
+        "total": 2,
+        "preserved": 0,
+        "percentance": 0.0
+    },
+    "LAO": {
+        "total": 1,
+        "preserved": 0,
+        "percentance": 0.0
+    },
+    "HANGUL": {
+        "total": 1,
+        "preserved": 0,
+        "percentance": 0.0
+    },
+    "overall": {
+        "total": 1402,
+        "preserved": 755,
+        "rate": 53.85164051355207
+    }
+}
