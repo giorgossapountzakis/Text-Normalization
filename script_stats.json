@@ -14,13 +14,13 @@
         "preserved": 0,
         "percentance": 0.0
     },
-    "Katakana": {
-        "total": 37,
+    "CJK": {
+        "total": 225,
         "preserved": 0,
         "percentance": 0.0
     },
-    "CJK": {
-        "total": 225,
+    "Katakana": {
+        "total": 37,
         "preserved": 0,
         "percentance": 0.0
     },
@@ -59,12 +59,12 @@
         "preserved": 0,
         "percentance": 0.0
     },
-    "PRIME": {
+    "DOUBLE": {
         "total": 1,
         "preserved": 1,
         "percentance": 1.0
     },
-    "DOUBLE": {
+    "PRIME": {
         "total": 1,
         "preserved": 1,
         "percentance": 1.0

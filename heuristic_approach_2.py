@@ -1,4 +1,3 @@
-# %%
 import pandas as pd
 import re
 import unicodedata
@@ -8,16 +7,14 @@ import seaborn as sns
 from typing import Dict, List, Set, Tuple
 import sys
 import json
+import sklearn
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score, f1_score
 
-
-# %%
 def analyze_text_normalization(csv_path: str) -> None:
     """
     Analyze a text normalization dataset to identify patterns in character preservation
     across different scripts and normalization patterns.
-
-    Args:
-        csv_path: Path to the CSV file containing the text normalization dataset
     """
     print(f"Loading dataset from {csv_path}...")
     # Load the dataset
@@ -45,27 +42,22 @@ def analyze_text_normalization(csv_path: str) -> None:
     # 4. Print summary
     print_summary(script_stats, pattern_stats)
 
+    return df
+
 
 def get_script_name(char: str) -> str:
     """
-    Identify the script of a character.
-
-    Args:
-        char: A single character
-
-    Returns:
-        The name of the script
+    find the script of a character.
     """
     code = ord(char)
 
-    # Latin-based diacritics - we'll categorize basic Latin + Latin-1 Supplement with diacritics
+    # Latin-based diacritics 
     if code < 0x0100:
         # Check if it has diacritics
         if unicodedata.combining(char) or unicodedata.decomposition(char):
             return "Latin-diacritics"
         return "Basic-Latin"
-
-    # Other scripts
+    # other diacritics
     if 0x0400 <= code <= 0x04FF:
         return "Cyrillic"
     if 0x0600 <= code <= 0x06FF:
@@ -174,13 +166,6 @@ def analyze_script_preservation(df: pd.DataFrame, sample_size: int = 10000) -> D
 def analyze_normalization_patterns(df: pd.DataFrame, sample_size: int = 10000) -> Dict:
     """
     Analyze common normalization patterns in the dataset.
-
-    Args:
-        df: DataFrame containing 'raw' and 'clean' text columns
-        sample_size: Number of rows to analyze (for speed)
-
-    Returns:
-        Dictionary with normalization pattern statistics
     """
     print("\nAnalyzing normalization patterns...")
 
@@ -232,10 +217,6 @@ def analyze_normalization_patterns(df: pd.DataFrame, sample_size: int = 10000) -
 def print_summary(script_stats: Dict, pattern_stats: Dict) -> None:
     """
     Print a summary of the analysis results.
-
-    Args:
-        script_stats: Dictionary with script preservation statistics
-        pattern_stats: Dictionary with normalization pattern statistics
     """
     print("\n" + "=" * 70)
     print("                   TEXT NORMALIZATION ANALYSIS SUMMARY")
@@ -344,7 +325,98 @@ def visualize_results(script_stats: Dict, pattern_stats: Dict) -> None:
     print("\nVisualization saved as 'normalization_analysis.png'")
     plt.close()
 
+def heuristic_clean_2(text):
+    with open("script_stats.json", "r") as f:
+        script_stats = json.load(f)
+    modified_text=text
+    for char in text:
+        if char=='/':
+            continue
+        script = get_script_name(char)
+        if script_stats[script]['percentance']<0.5:
+            modified_text=modified_text.replace(char,'')
+    return modified_text
 
-# %%
+
 if __name__ == "__main__":
-    analyze_text_normalization(r"normalization_assesment_dataset_10k.csv")
+    df = analyze_text_normalization(r"normalization_assesment_dataset_10k.csv")
+
+    # Split data
+    X = df['raw']
+    y = df['clean']
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+    # Make predictions using heuristic_clean
+    y_pred = [heuristic_clean_2(text) for text in X_test]
+
+    # Calculate metrics
+    accuracy = accuracy_score(y_test, y_pred)
+    f1 = f1_score(y_test, y_pred, average='weighted')
+
+    print(f'Accuracy: {accuracy:.3f}')
+    print(f'F1 Score: {f1:.3f}')
+
+    """
+Loading dataset from normalization_assesment_dataset_10k.csv...
+Dataset shape: (10000, 2)
+
+Analyzing script preservation...
+
+Analyzing normalization patterns...
+
+Visualization saved as 'normalization_analysis.png'
+
+======================================================================
+                   TEXT NORMALIZATION ANALYSIS SUMMARY
+======================================================================
+
+Non-Latin Character Preservation:
+  Overall preservation rate: 53.85%
+  Rows with non-Latin characters: 1402
+  Rows with preserved non-Latin characters: 755
+
+Preservation rates by script:
+  DOUBLE: 1/1 (100.00%)
+  MODIFIER: 1/1 (100.00%)
+  PRIME: 1/1 (100.00%)
+  WEST: 1/1 (100.00%)
+  Basic-Latin: 22/23 (95.65%)
+  HYPHEN: 14/16 (87.50%)
+  RIGHT: 45/53 (84.91%)
+  Latin-diacritics: 598/708 (84.46%)
+  LEFT: 20/25 (80.00%)
+  ZERO: 12/16 (75.00%)
+  LATIN: 96/177 (54.24%)
+  EN: 1/2 (50.00%)
+  KHMER: 1/4 (25.00%)
+  Cyrillic: 4/120 (3.33%)
+  Arabic: 0/28 (0.00%)
+  CJK: 0/225 (0.00%)
+  COMBINING: 0/1 (0.00%)
+  FULLWIDTH: 0/2 (0.00%)
+  GREEK: 0/5 (0.00%)
+  HANGUL: 0/1 (0.00%)
+  HEBREW: 0/8 (0.00%)
+  Hiragana: 0/27 (0.00%)
+  IDEOGRAPHIC: 0/1 (0.00%)
+  Katakana: 0/37 (0.00%)
+  Korean: 0/62 (0.00%)
+  LAO: 0/1 (0.00%)
+  MALE: 0/2 (0.00%)
+  Thai: 0/9 (0.00%)
+  WAVE: 0/2 (0.00%)
+  WHITE: 0/1 (0.00%)
+
+Normalization Patterns:
+  Publishing terms removed: 346 (3.46%)
+  Business entities removed: 94 (0.94%)
+  Non-Latin rows normalized to empty: 538 (5.38%)
+  Name structure changed: 0 (0.00%)
+
+Key Findings:
+The dataset shows selective character preservation across different scripts
+Business terms and publishing-related information are commonly removed
+538 rows with non-Latin characters were normalized to empty strings
+Accuracy: 0.654
+F1 Score: 0.664
+    """
